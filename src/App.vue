@@ -2,11 +2,11 @@
  import axios from 'axios';
 import { store } from './store.js';
 import AppHeader from './components/AppHeader.vue';
-
-
+import CharactersList from './components/CharactersList.vue';
 export default {
     components: {
       AppHeader,
+      CharactersList
     },
     data() {
       return {
@@ -15,9 +15,9 @@ export default {
     },
     methods: {
       getCharacters() {
-        axios.get('https://db.ygoprodeck.com/api/v7/cardinfo.php?name=Dark Magician')
+        axios.get('https://db.ygoprodeck.com/api/v7/cardinfo.php')
         .then(response => {
-          this.store.charactersList = response.data.results;
+          this.store.charactersList = response.data.data;
         });
       }
     },
@@ -25,11 +25,16 @@ export default {
       this.getCharacters();
     }
   }
-
 </script>
 
 <template>
-     <AppHeader title="Yu-Gi-Oh Api"></AppHeader>
+     <AppHeader></AppHeader>
+
+     <main>
+      <CharactersList></CharactersList>
+
+     </main>
+    
 </template>
 
 <style lang="scss">

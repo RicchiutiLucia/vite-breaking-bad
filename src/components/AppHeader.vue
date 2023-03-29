@@ -1,39 +1,27 @@
-<template>
-    <header>
-    <div class="d-flex">
-        <a>
-            <img src="../../public/logo.png" width="70" alt="Yu-Gi-Oh">{{title}}
-        </a>
-    </div>
-       
-</header>
-
-</template>
-
 <script>
     export default {
-        name: 'AppHeader',
-        props: {
-            title: String
-        }
+        name:'AppHeader'
     }
 </script>
 
-<style scoped lang="scss">
-    @use '../styles/partials/variables.scss' as *;
-    @use '../styles/general.scss' as *;
-    .logo{
-        color: $white;
-        padding: 20px;
-        font-size: 30px;
+<template>
+    <div>
+        <img id="logo" src="logo.jpg" alt="">
+        <h1>Yu-Gi-Oh Api</h1>
+    </div>
+</template>
+
+<style lang="scss" scoped>
+div{
+    height: 80px;
+    widows: 100vw;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    
+    #logo{
+        height: 50px;
+        padding: 0 10px;
     }
-    header{
-    padding: 20px;
-    height: 70px;
-        a{
-            font-size: 30px;
-            text-decoration: none;
-            vertical-align: middle;
-        }
-  }
+}
 </style>
