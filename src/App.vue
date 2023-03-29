@@ -3,10 +3,12 @@
 import { store } from './store.js';
 import AppHeader from './components/AppHeader.vue';
 import CharactersList from './components/CharactersList.vue';
+import Loading from './components/Loading.vue';
 export default {
     components: {
       AppHeader,
-      CharactersList
+      CharactersList,
+      Loading
     },
     data() {
       return {
@@ -18,6 +20,7 @@ export default {
         axios.get('https://db.ygoprodeck.com/api/v7/cardinfo.php')
         .then(response => {
           this.store.charactersList = response.data.data;
+          this.store.loading = false;
         });
       }
     },
@@ -34,6 +37,8 @@ export default {
       <CharactersList></CharactersList>
 
      </main>
+
+     <Loading />
     
 </template>
 
