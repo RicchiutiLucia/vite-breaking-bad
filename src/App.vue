@@ -8,14 +8,17 @@ import AppHeader from './components/AppHeader.vue';
 import CharactersList from './components/CharactersList.vue';
 import Loading from './components/Loading.vue';
 import AppSearch from './components/AppSearch.vue';
+import CounterCard from './components/CounterCard.vue';
 
-export default{
-  components:{
-    AppHeader,
-    AppSearch,
-    Loading,
-    CharactersList,
-  },
+
+export default {
+    components:{
+     AppHeader,
+     AppSearch,
+     CounterCard,
+     CharactersList,
+     Loading
+    },
     data(){
       return{
         store
@@ -23,7 +26,7 @@ export default{
     },
     methods:{
       GetCard(){
-        axios.get('https://db.ygoprodeck.com/api/v7/cardinfo.php')
+        axios.get('https://db.ygoprodeck.com/api/v7/cardinfo.php?num=50&offset=0')
         .then(response =>{
           this.store.charactersList = response.data.data;
           this.store.loading=false;
@@ -33,37 +36,37 @@ export default{
         axios.get('https://db.ygoprodeck.com/api/v7/archetypes.php')
         .then(response =>{
           this.store.CardArchetype = response.data;
-          
         })
       },
       SelectedArchetype(){
-        let urlApi = 'https://db.ygoprodeck.com/api/v7/cardinfo.php';
-        
-        urlApi +=`?archetype=${this.store.search}`;
-        axios.get(urlApi)
-        .then(response =>{
-          this.store.charactersList = response.data.data;
+        if(store.search ==''){
+          this.GetCard();
+        }else{
+          let urlApi = 'https://db.ygoprodeck.com/api/v7/cardinfo.php';
+          
+          urlApi +=`?archetype=${this.store.search}`;
+          axios.get(urlApi)
+          .then(response =>{
+            this.store.charactersList = response.data.data;
         })
-      },
-      created(){
+        }
+      }
+    },
+    created(){
       this.GetCard();
       this.GetCardArchetype();
     }
-    }
   }
-    
-
-     
-
-
-
- 
 </script>
 
 <template>
      <AppHeader></AppHeader>
-     <AppSearch @doSearch="SelectedArchetype()"></AppSearch>
+
+
+     <AppSearch @doSearch="SelectedArchetype"></AppSearch>
      <main>
+
+      <CounterCard></CounterCard>
 
       <CharactersList></CharactersList>
 
