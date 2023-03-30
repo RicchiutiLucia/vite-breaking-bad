@@ -1,39 +1,70 @@
 <script>
- import axios from 'axios';
+import axios from 'axios';
+
 import { store } from './store.js';
+
+
 import AppHeader from './components/AppHeader.vue';
 import CharactersList from './components/CharactersList.vue';
 import Loading from './components/Loading.vue';
-export default {
-    components: {
-      AppHeader,
-      CharactersList,
-      Loading
-    },
-    data() {
-      return {
+import AppSearch from './components/AppSearch.vue';
+
+export default{
+  components:{
+    AppHeader,
+    AppSearch,
+    Loading,
+    CharactersList,
+  },
+    data(){
+      return{
         store
       }
     },
-    methods: {
-      getCharacters() {
+    methods:{
+      GetCard(){
         axios.get('https://db.ygoprodeck.com/api/v7/cardinfo.php')
-        .then(response => {
+        .then(response =>{
           this.store.charactersList = response.data.data;
-          this.store.loading = false;
-        });
-      }
-    },
-    created() {
-      this.getCharacters();
+          this.store.loading=false;
+        })
+      },
+      GetCardArchetype(){
+        axios.get('https://db.ygoprodeck.com/api/v7/archetypes.php')
+        .then(response =>{
+          this.store.CardArchetype = response.data;
+          
+        })
+      },
+      SelectedArchetype(){
+        let urlApi = 'https://db.ygoprodeck.com/api/v7/cardinfo.php';
+        
+        urlApi +=`?archetype=${this.store.search}`;
+        axios.get(urlApi)
+        .then(response =>{
+          this.store.charactersList = response.data.data;
+        })
+      },
+      created(){
+      this.GetCard();
+      this.GetCardArchetype();
+    }
     }
   }
+    
+
+     
+
+
+
+ 
 </script>
 
 <template>
      <AppHeader></AppHeader>
-
+     <AppSearch @doSearch="SelectedArchetype()"></AppSearch>
      <main>
+
       <CharactersList></CharactersList>
 
      </main>

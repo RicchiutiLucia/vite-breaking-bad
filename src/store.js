@@ -1,8 +1,11 @@
+import { all } from 'axios';
 import { reactive } from 'vue';
 
 export const store = reactive(
     {
         charactersList: [],
-        loading: true
+        loading: true,
+        CardArchetype:[],
+        search:''
     }
 );
